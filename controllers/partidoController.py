@@ -4,11 +4,16 @@ from models.partidoModel import Partido
 class PartidoController:
 
     def __init__(self):
+        """
+        This is the constructor of PartidoController class
+        """
         print("Partido Controller ready")
 
-    # GET con toda la información de la tabla
     def index(self) -> list:
-        print("All Partido")
+        """
+        This method returns all 'Partido' persisted in the DB
+        :return: partido's list
+        """
         data = {
             "_id": "1",
             "nombre": "Partido Liberal",
@@ -17,9 +22,12 @@ class PartidoController:
         partido = Partido(data)
         return [partido.__dict__]
 
-    # GET con la información de un solo partido de la tabla
     def show(self, id_: str) -> list:
-        print("Return one Partido")
+        """
+        This method returns a 'Partido' according to the ID requested in the DB
+        :param id_:
+        :return: partido ID
+        """
         data = {
             "_id": id_,
             "nombre": "Partido Liberal",
@@ -28,21 +36,31 @@ class PartidoController:
         partido = Partido(data)
         return partido.__dict__
 
-    # POST para ingresar información a la tabla
     def create(self, partido_: dict) -> dict:
-        print("Insert an Partido")
+        """
+        This method allows entering information of a 'Partido' to the BD
+        :param partido_:
+        :return:
+        """
         partido = Partido(partido_)
         return partido.__dict__
 
-    # UPDATE para actualizar información de la tabla
     def update(self, id_: str, partido_: dict) -> dict:
-        print("Update an Partido")
+        """
+        This method allows updating information of a 'Partido' to the BD
+        :param id_:
+        :param partido_:
+        :return:
+        """
         data = partido_
         data['_id'] = id_
         partido = Partido(data)
         return partido.__dict__
 
-    # DELETE para eliminar información de la tabla
     def delete(self, id_: str) -> dict:
-        print("Delete an Partido " + id_)
+        """
+        This method allows you to remove information of a 'Partido' to the BD
+        :param id_:
+        :return:
+        """
         return {"Delete count": 1}
