@@ -4,12 +4,13 @@ from flask_cors import CORS
 import json
 from waitress import serve
 
+from blueprints.mesaBlueprint import mesa_blueprints
 from blueprints.partidoBlueprint import partido_blueprint
 
 app = Flask(__name__)
 cors = CORS(app)
+app.register_blueprint(mesa_blueprints)
 app.register_blueprint(partido_blueprint)
-
 
 @app.route("/", methods=['GET'])
 def home():
