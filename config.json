@@ -1,4 +1,6 @@
 {
   "url-backend": "127.0.0.1",
-  "port": 8081
+  "port": 8081,
+  "db-connection": "mongodb+srv://teamJavi:MisionTIC_2022@registraduriac17g4.5e5fdau.mongodb.net/registraduria_db?retryWrites=true&w=majority",
+  "db-name": "registraduria_db"
 }

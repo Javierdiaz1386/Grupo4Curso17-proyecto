@@ -18,7 +18,7 @@ def home():
 
 
 def load_file_config():
-    with open('config.json') as file:
+    with open("config.json") as file:
         data = json.load(file)
     return data
 
