@@ -14,15 +14,27 @@ class MesaController:
 
         :return:
         """
-        print("return all mesas")
+        data = {
+            "_id": "1",
+            "numero_mesa": "1",
+            "cantidad_inscritos": "30"
+        }
+        mesa = Mesa(data)
+        return [mesa.__dict__]
 
-    def show(self, id_: str) -> dict:
+    def show(self, id_: str) -> list:
         """
 
         :param id_:
         :return:
         """
-        print("return one  mesa")
+        data = {
+            "_id": "1",
+            "numero_mesa": "1",
+            "cantidad_inscritos": "30"
+        }
+        mesa = Mesa(data)
+        return mesa.__dict__
 
     def create(self, mesa_: dict) -> dict:
         """
@@ -30,7 +42,8 @@ class MesaController:
         :param mesa_:
         :return:
         """
-        print("insert a mesa")
+        mesa = Mesa(mesa_)
+        return mesa.__dict__
 
     def update(self, id_: str, mesa_: dict) -> dict:
         """
@@ -40,12 +53,15 @@ class MesaController:
         :return:
         """
 
-        print("update a mesa")
+        data = mesa_
+        data['_id'] = id_
+        mesa = Mesa(data)
+        return mesa.__dict__
 
-    def delete(self, id_: str) -> str:
+    def delete(self, id_: str) -> dict:
         """
 
         :param id_:
         :return:
         """
-        print("delete a mesa")
+        return {"Delete count": 1}
