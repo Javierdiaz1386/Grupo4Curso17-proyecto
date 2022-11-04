@@ -9,7 +9,7 @@ voto_controller = VotoController()
 
 @voto_blueprint.route("/voto/all", methods=['GET'])
 def get_voto():
-    response = voto_controller.index();
+    response = voto_controller.index()
     return response, 200
 
 

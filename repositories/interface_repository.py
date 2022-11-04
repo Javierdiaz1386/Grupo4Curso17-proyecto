@@ -11,13 +11,17 @@ class InterfaceRepository(Generic[T]):
     def __init__(self):
         ca = certifi.where()
         data_config = self.load_file_config()
-        client = pymongo.MongoClient(data_config.get("db-connection"), tslCAFile=ca)
-        self.data_base = client[data_config.get("db-name")]
+        client = pymongo.MongoClient(
+            "mongodb+srv://teamJavi:MisionTIC_2022@registraduriac17g4.5e5fdau.mongodb.net/"
+            "registraduria_db?retryWrites=true&w=majority",
+            tlsCAFile=ca
+        )
+        self.data_base = client['registraduria_db']
         model_class = get_args(self.__orig_bases__[0])
         self.collection = model_class[0].__name__.lower()
 
     def load_file_config(self) -> dict:
-        with open("../config.json") as file:
+        with open("config.json") as file:
             data = json.load(file)
         return data
 
@@ -25,13 +29,13 @@ class InterfaceRepository(Generic[T]):
         current_collection = self.data_base[self.collection]
         dataset = []
         for document in current_collection.find():
-            document['id_'] = document['id_'].__str__()
-            document = self.transform_object_lds(document)
+            document['_id'] = document['_id'].__str__()
+            #document = self.transform_object_lds(document)
             document = self.get_values_db_ref(document)
             dataset.append(document)
         return dataset
 
-    def find_by_id(self, id_: str) -> T:
+    def find_by_id(self, id_: str) -> dict:
         current_collection = self.data_base[self.collection]
         document = current_collection.find_one({'_id': ObjectId(id_)})
         document = self.get_values_db_ref(document)

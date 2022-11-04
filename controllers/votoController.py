@@ -15,8 +15,9 @@ class VotoController:
         This method returns all 'Voto' persisted in the DB
         :return: voto's list
         """
-        response = VotoRepository.find_all()
-        return response, 200
+        response = VotoRepository().find_all()
+        print(response)
+        return response
 
     def show(self, id_: str) -> list:
         """
@@ -24,12 +25,8 @@ class VotoController:
         :param id_: voto id str
         :return: voto according id
         """
-        data = {
-            "_id": id_,
-            "numero_mesa": "50",
-            "id_partido": "5"
-        }
-        voto = Voto(data)
+        response = VotoRepository().find_by_id(id_)
+        voto = Voto(response)
         return voto.__dict__
 
     def create(self, voto_: dict) -> dict:
@@ -39,7 +36,8 @@ class VotoController:
         :return: voto created
         """
         voto = Voto(voto_)
-        return voto.__dict__
+
+        return VotoRepository().save(voto)
 
     def update(self, id_: str, voto_: dict) -> dict:
         """

@@ -15,5 +15,8 @@ print(db)
 data_base = client['registraduria_db']
 print(data_base.list_collection_names())
 
-collection = data_base.get_collection('candidato')
+collection = data_base.get_collection('voto')
 print(collection.find())
+
+for i in collection.find():
+    print(i["id_"])
