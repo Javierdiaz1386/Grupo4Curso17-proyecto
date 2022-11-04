@@ -46,10 +46,8 @@ class VotoController:
         :param voto_:
         :return:
         """
-        data = voto_
-        data['_id'] = id_
-        voto = Voto(data)
-        return voto.__dict__
+        response = VotoRepository().update(id_, voto_)
+        return response
 
     def delete(self, id_: str) -> dict:
         """
@@ -57,4 +55,5 @@ class VotoController:
         :param id_:
         :return:
         """
+        VotoRepository().delete(id_)
         return {"Delete count": 1}
