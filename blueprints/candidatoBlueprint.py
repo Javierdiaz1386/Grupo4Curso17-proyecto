@@ -1,39 +1,40 @@
 from flask import Blueprint
 from flask import request
 
-from controllers.candidatoController import  CandidatoController
+from controllers.candidateController import  CandidateController
 
-candidato_blueprints = Blueprint('candidato_blueprint', __name__)
-candidato_controller = CandidatoController()
+candidate_blueprints = Blueprint('candidate_blueprint', __name__)
+candidate_controller = CandidateController()
 
 
-@candidato_blueprints.route("/candidato/all", methods=['GET'])
-def get_candidato():
-    response = candidato_controller.index(),
+@candidate_blueprints.route("/candidate/all", methods=['GET'])
+def get_candidate():
+    response = candidate_controller.index(),
     return response, 200
 
 
-@candidato_blueprints.route("/candidato/<string:id_>", methods=['GET'])
-def get_candidato_by_id(id_):
-    response = candidato_controller.show(id_),
+@candidate_blueprints.route("/candidate/<string:id_>", methods=['GET'])
+def get_candidate_by_id(id_):
+    response = candidate_controller.show(id_),
     return response, 200
 
 
-@candidato_blueprints.route("/candidato/insert", methods=['POST'])
-def insert_candidato():
-    candidato = request.get_json()
-    response = candidato_controller.create(candidato)
+@candidate_blueprints.route("/candidate/insert", methods=['POST'])
+def insert_candidate():
+    candidate = request.get_json()
+    response = candidato_controller.create(candidate)
     return response, 201
 
 
-@candidato_blueprints.route("/candidato/update/<string:id_>", methods=['PATCH'])
-def update_candidato(id_):
-    candidato = request.get_json()
-    response = candidato_controller.update(id_, candidato)
+@candidate_blueprints.route("/candidate/update/<string:id_>", methods=['PATCH'])
+def update_candidate(id_):
+    candidate = request.get_json()
+    response = candidate_controller.update(id_, candidate)
     return response, 201
 
 
-@candidato_blueprints.route("/candidato/delete/<string: id_>", methods=['DELETE'])
-def delete_candidato(id_):
-    response = candidato_controller.delete(id_)
+@candidate_blueprints.route("/candidate/delete/<string: id_>", methods=['DELETE'])
+def delete_candidate(id_):
+    response = candidate_controller.delete(id_)
     return response, 204
+
