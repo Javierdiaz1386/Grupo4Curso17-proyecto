@@ -1,4 +1,4 @@
-from models.votoModel import VotoModel
+from models.votoModel import Voto
 
 
 class VotoController:

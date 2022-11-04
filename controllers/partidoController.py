@@ -42,6 +42,7 @@ class PartidoController:
         :param partido_:
         :return:
         """
+        print("insert a Partido")
         partido = Partido(partido_)
         return partido.__dict__
 
