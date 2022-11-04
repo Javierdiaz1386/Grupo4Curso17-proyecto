@@ -29,7 +29,7 @@ class VotoController:
             "numero_mesa": "50",
             "id_partido": "5"
         }
-        voto = VotoModel(data)
+        voto = Voto(data)
         return voto.__dict__
 
     def create(self, voto_: dict) -> dict:
@@ -38,7 +38,7 @@ class VotoController:
         :param voto_:
         :return: voto created
         """
-        voto = VotoModel(voto_)
+        voto = Voto(voto_)
         return voto.__dict__
 
     def update(self, id_: str, voto_: dict) -> dict:
@@ -50,7 +50,7 @@ class VotoController:
         """
         data = voto_
         data['_id'] = id_
-        voto = VotoModel(data)
+        voto = Voto(data)
         return voto.__dict__
 
     def delete(self, id_: str) -> dict:
