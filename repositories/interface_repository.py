@@ -47,7 +47,7 @@ class InterfaceRepository(Generic[T]):
 
     def save(self, item: T) -> T:
         current_collection = self.data_base[self.collection]
-        item = self.transform_refs(item)
+        # TODO agregar esta wea (item = self.transform_refs(item)) cuando este listo esa funcion
         if hasattr(item, '_id') and item._id != "":
             id_ = item._id
             _id = ObjectId(id_)
