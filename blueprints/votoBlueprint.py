@@ -3,7 +3,7 @@ from flask import request
 
 from controllers.votoController import VotoController
 
-voto_blueprint = Blueprint('partido_blueprint', __name__)
+voto_blueprint = Blueprint('voto_blueprint', __name__)
 voto_controller = VotoController()
 
 

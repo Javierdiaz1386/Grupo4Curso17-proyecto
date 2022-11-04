@@ -1,4 +1,5 @@
-from models.votoModel import VotoModel
+from models.votoModel import Voto
+from repositories.votoRepository import VotoRepository
 
 
 class VotoController:
@@ -14,13 +15,8 @@ class VotoController:
         This method returns all 'Voto' persisted in the DB
         :return: voto's list
         """
-        data = {
-            "_id": "1",
-            "numero_mesa": "4",
-            "id_partido": "9"
-        }
-        voto = VotoModel(data)
-        return [voto.__dict__]
+        response = VotoRepository.find_all()
+        return response, 200
 
     def show(self, id_: str) -> list:
         """
