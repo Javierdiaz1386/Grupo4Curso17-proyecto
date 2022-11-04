@@ -1,39 +1,39 @@
-from models.candidato import Candidato
+from models.candidate import Candidate
 
 
-class CandidatoController:
+class CandidateController:
 
     def __init__(self):
         """
-        Este es el constructor de la clase CandidatoController
+        This is the constructor of CandidateController class
         """
-        print("Controlador candidato listo")
+        print("Candidate Controller ready")
 
     def index(self) -> list:
         """
-        Este método retorna todos los candidatos disponibles en la db
+          This method returns all 'Candidate' persisted in the DB
         :param self
-        :return:
+        :return: Candidate's list
         """
-        print("retorna todos los candidatos")
+        print("return all candidates")
         data = {
             "cedula": "1232434",
             "numero_resolucion": "9",
             "nombre": "Pedro",
             "apellido": "Martinez"
         }
-        candidato = Candidato(data)
-        return [candidato.__dict__]
+        candidate = Candidate(data)
+        return [candidate.__dict__]
 
     # Equivalent to 'one by id'
     def show(self, id_) -> dict:
         """
 
-        Este método retorna un candidato específico en la db
+         This method returns a 'Candidate' according to the ID requested in the DB
         :param id_:
         :return:
         """
-        print("retorna un estudiante")
+        print("return one candidate")
         data = {
              "_id": id_,
              "cedula": "1232434",
@@ -41,40 +41,41 @@ class CandidatoController:
              "nombre": "Pedro",
              "apellido": "Martinez"
         }
-        student = Candidato(data)
-        return candidato.__dict__
+        student = Candidate(data)
+        return candidate.__dict__
 
     # Equivalent to 'insert'
-    def create(self, candidato_) -> dict:
+    def create(self, candidate_) -> dict:
         """
-        Este método inserta un candidato específico en la db
-        :param candidato_:
+         This method allows entering information of a 'Candidate' to the BD
+        :param candidate_:
         :return:
         """
-        print("inserte un candidato")
-        candidato = Candidato(candidato_)
-        return candidato.__dict__
+        print("insert a candidate")
+        candidate = Candidate(candidate_)
+        return candidate.__dict__
 
-    def update(self, id_, candidato_) -> dict:
+    def update(self, id_, candidate_) -> dict:
         """
-        Este método actualiza un candidato específico en la db
+        
+        This method allows updating information of a 'Candidate' to the BD
         :param id_:
-        :param candidato_:
+        :param candidate_:
         :return:
         """
-        print("actualización un candidato")
-        data = candidato_
+        print("update a candidate")
+        data = candidate_
         data["_id"] = id_
-        candidato = Candidato(data)
-        return candidato.__dict__
+        candidate = Candidate(data)
+        return candidate.__dict__
 
     def delete(self, id_) -> dict:
         """
-        Este método elimina un candidato específico en la db
+         This method allows you to remove information of a 'Candidate' to the BD
         :param id_:
         :return:
         """
-        print("eliminación de candidato" + id_)
+        print("Delete count" + id_)
         return {
-            "candidato eliminado": 1
+            "Delete count": 1
         }
