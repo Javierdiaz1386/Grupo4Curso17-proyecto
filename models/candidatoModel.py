@@ -1,6 +1,6 @@
 from models.abstractModel import AbstractModel
 
 
-class Candidate(AbstractModel):
+class Candidato(AbstractModel):
     pass
 

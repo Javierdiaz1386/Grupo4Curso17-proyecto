@@ -66,7 +66,7 @@ class InterfaceRepository(Generic[T]):
         current_collection = self.data_base[self.collection]
         _id = ObjectId(id_)
 
-        
+
         update_item = {"$set": item}
         document = current_collection.update_one({'_id': _id}, update_item)
         return {"updated_count": document.matched_count}

@@ -1,4 +1,5 @@
-from models.candidatoModel import Candidate
+from models.candidatoModel import Candidato
+from repositories.candidatoRepository import CandidatoRepository
 
 
 class CandidateController:
@@ -15,16 +16,9 @@ class CandidateController:
         :param self
         :return: Candidate's list
         """
-        print("return all candidates")
-        data = {
-            "cedula": "1232434",
-            "numero_resolucion": "9",
-            "nombre": "Pedro",
-            "apellido": "Martinez"
-        }
-        candidate = Candidate(data)
-        return [candidate.__dict__]
+        response = CandidatoRepository().find_all()
 
+        return response
     # Equivalent to 'one by id'
     def show(self, id_) -> dict:
         """
@@ -33,27 +27,16 @@ class CandidateController:
         :param id_:
         :return:
         """
-        print("return one candidate")
-        data = {
-             "_id": id_,
-             "cedula": "1232434",
-             "numero_resolucion": "9",
-             "nombre": "Pedro",
-             "apellido": "Martinez"
-        }
-        student = Candidate(data)
-        return candidate.__dict__
-
+        pass
     # Equivalent to 'insert'
+
     def create(self, candidate_) -> dict:
         """
          This method allows entering information of a 'Candidate' to the BD
         :param candidate_:
         :return:
         """
-        print("insert a candidate")
-        candidate = Candidate(candidate_)
-        return candidate.__dict__
+        pass
 
     def update(self, id_, candidate_) -> dict:
         """
@@ -63,11 +46,7 @@ class CandidateController:
         :param candidate_:
         :return:
         """
-        print("update a candidate")
-        data = candidate_
-        data["_id"] = id_
-        candidate = Candidate(data)
-        return candidate.__dict__
+        pass
 
     def delete(self, id_) -> dict:
         """
@@ -75,7 +54,4 @@ class CandidateController:
         :param id_:
         :return:
         """
-        print("Delete count" + id_)
-        return {
-            "Delete count": 1
-        }
+        pass

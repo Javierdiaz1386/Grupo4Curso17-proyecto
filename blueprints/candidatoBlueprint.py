@@ -9,7 +9,7 @@ candidate_controller = CandidateController()
 
 @candidate_blueprint.route("/candidate/all", methods=['GET'])
 def get_candidate():
-    response = candidate_controller.index(),
+    response = candidate_controller.index()
     return response, 200
 
 

@@ -1,6 +1,6 @@
 from repositories.interface_repository import InterfaceRepository
-from models.candidateModel import Candidate
+from models.candidatoModel import Candidato
 
 
-class CandidatoRepository(InterfaceRepository[Candidate]):
+class CandidatoRepository(InterfaceRepository[Candidato]):
     pass
