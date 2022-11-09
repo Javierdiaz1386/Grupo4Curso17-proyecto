@@ -1,4 +1,5 @@
 from models.partidoModel import Partido
+from repositories.partidoRepository import PartidoRepository
 
 
 class PartidoController:
@@ -14,13 +15,9 @@ class PartidoController:
         This method returns all 'Partido' persisted in the DB
         :return: partido's list
         """
-        data = {
-            "_id": "1",
-            "nombre": "Partido Liberal",
-            "lema": "Oportunidades para todos"
-        }
-        partido = Partido(data)
-        return [partido.__dict__]
+        response = PartidoRepository().find_all()
+        print(response)
+        return response
 
     def show(self, id_: str) -> list:
         """
@@ -28,12 +25,8 @@ class PartidoController:
         :param id_:
         :return: partido ID
         """
-        data = {
-            "_id": id_,
-            "nombre": "Partido Liberal",
-            "lema": "Oportunidades para todos"
-        }
-        partido = Partido(data)
+        response = PartidoRepository().find_by_id(id_)
+        partido = Partido(response)
         return partido.__dict__
 
     def create(self, partido_: dict) -> dict:
@@ -42,9 +35,9 @@ class PartidoController:
         :param partido_:
         :return:
         """
-        print("insert a Partido")
+        print("insert a 'Partido'")
         partido = Partido(partido_)
-        return partido.__dict__
+        return PartidoRepository().save(partido)
 
     def update(self, id_: str, partido_: dict) -> dict:
         """
@@ -53,10 +46,8 @@ class PartidoController:
         :param partido_:
         :return:
         """
-        data = partido_
-        data['_id'] = id_
-        partido = Partido(data)
-        return partido.__dict__
+        response = PartidoRepository().update(id_, partido_)
+        return response
 
     def delete(self, id_: str) -> dict:
         """
@@ -64,4 +55,5 @@ class PartidoController:
         :param id_:
         :return:
         """
+        PartidoRepository().delete(id_)
         return {"Delete count": 1}

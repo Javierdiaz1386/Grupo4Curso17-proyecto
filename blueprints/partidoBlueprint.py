@@ -9,7 +9,7 @@ partido_controller = PartidoController()
 
 @partido_blueprint.route("/partido/all", methods=['GET'])
 def get_partidos():
-    response = partido_controller.index();
+    response = partido_controller.index()
     return response, 200
 
 
