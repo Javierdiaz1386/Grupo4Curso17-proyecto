@@ -9,6 +9,9 @@ T = TypeVar('T')
 
 class InterfaceRepository(Generic[T]):
     def __init__(self):
+        """
+
+        """
         ca = certifi.where()
         data_config = self.load_file_config()
         client = pymongo.MongoClient(
@@ -21,11 +24,19 @@ class InterfaceRepository(Generic[T]):
         self.collection = model_class[0].__name__.lower()
 
     def load_file_config(self) -> dict:
+        """
+
+        :return:
+        """
         with open("config.json") as file:
             data = json.load(file)
         return data
 
     def find_all(self) -> list:
+        """
+
+        :return:
+        """
         current_collection = self.data_base[self.collection]
         dataset = []
         for document in current_collection.find():
@@ -36,6 +47,11 @@ class InterfaceRepository(Generic[T]):
         return dataset
 
     def find_by_id(self, id_: str) -> dict:
+        """
+
+        :param id_:
+        :return:
+        """
         current_collection = self.data_base[self.collection]
         document = current_collection.find_one({'_id': ObjectId(id_)})
         document = self.get_values_db_ref(document)
@@ -46,6 +62,11 @@ class InterfaceRepository(Generic[T]):
         return document
 
     def save(self, item: T) -> T:
+        """
+
+        :param item:
+        :return:
+        """
         current_collection = self.data_base[self.collection]
         # TODO agregar esta wea (item = self.transform_refs(item)) cuando este listo esa funcion
         if hasattr(item, '_id') and item._id != "":
@@ -63,21 +84,35 @@ class InterfaceRepository(Generic[T]):
         return document
 
     def update(self, id_: str, item: T) -> T:
+        """
+
+        :param id_:
+        :param item:
+        :return:
+        """
         current_collection = self.data_base[self.collection]
         _id = ObjectId(id_)
-
-
         update_item = {"$set": item}
         document = current_collection.update_one({'_id': _id}, update_item)
         return {"updated_count": document.matched_count}
 
     def delete(self, id_: str) -> dict:
+        """
+
+        :param id_:
+        :return:
+        """
         current_collection = self.data_base[self.collection]
         _id = ObjectId(id_)
         result = current_collection.delete_one({'_id': _id})
         return {"delete_count": result.deleted_count}
 
     def query(self, query: dict) -> list:
+        """
+
+        :param query:
+        :return:
+        """
         current_collection = self.data_base[self.collection]
         dataset = []
         for document in current_collection.find(query):
@@ -88,6 +123,11 @@ class InterfaceRepository(Generic[T]):
         return dataset
 
     def query_aggregation(self, query: dict) -> list:
+        """
+
+        :param query:
+        :return:
+        """
         current_collection = self.data_base[self.collection]
         dataset = []
         for document in current_collection.aggregate(query):
@@ -97,7 +137,12 @@ class InterfaceRepository(Generic[T]):
             dataset.append(document)
         return dataset
 
-    def get_values_db_ref(self, document):
+    def get_values_db_ref(self, document: dict) -> dict:
+        """
+
+        :param document:
+        :return:
+        """
         keys = document.keys()
         for key in keys:
             if isinstance(document.get(key), DBRef):
@@ -112,17 +157,69 @@ class InterfaceRepository(Generic[T]):
                 document[key] = self.get_values_db_ref(document[key])
         return document
 
-    def get_values_db_ref_from_list(self):
-        pass
+    def get_values_db_ref_from_list(self, list_: list) -> list:
+        """
 
-    def transform_object_lds(self):
-        pass
+        :param list_:
+        :return:
+        """
+        processed_list = []
+        collection_ = self.data_base[list_[0]._id.collection]
+        for item in list_:
+            _id = ObjectId(item._id)
+            sub_document = collection_.find_one({'_id': _id})
+            sub_document['_id'] = sub_document['_id'].__str__()
+            processed_list.append(sub_document)
+        return processed_list
 
-    def transform_refs(self):
-        pass
+    def transform_object_lds(self, document: dict) -> dict:
+        """
 
-    def format_list(self):
-        pass
+        :param document:
+        :return:
+        """
+        for key in document.keys():
+            if isinstance(document.get(key), ObjectId):
+                document[key] = document[key].__str__()
+            elif isinstance(document.get(key), list):
+                document[key] = self.format_list(document.get(key))
+            elif isinstance(document[key], dict):
+                document[key] = self.transform_object_lds(document.get(key))
+        return document
 
-    def object_to_db_ref(self):
-        pass
+    def format_list(self, list_: list) -> list:
+        """
+
+        :param list_:
+        :return:
+        """
+        processed_list = []
+        for item in list_:
+            if isinstance(item, ObjectId):
+                temp = item.__str__()
+                processed_list.append(temp)
+        if len(processed_list) == 0:
+            processed_list = list_
+        return processed_list
+
+    def transform_refs(self, item: T) -> T:
+        """
+
+        :param item:
+        :return:
+        """
+        item_dict = item.__dict__
+        for key in item_dict.keys():
+            if item_dict.get(key).__str__().count("object") == 1:
+                object_ = self.object_to_db_ref(getattr(item, key))
+                setattr(item,key, object_)
+        return item
+
+    def object_to_db_ref(self, item: T) -> DBRef:
+        """
+
+        :param item:
+        :return:
+        """
+        collection_ = item.__class__.__name__.lower()
+        return DBRef(collection_, ObjectId(item._id))
