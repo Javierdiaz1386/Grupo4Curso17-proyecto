@@ -1,5 +1,5 @@
 from repositories.interface_repository import InterfaceRepository
-from models.votoModel import Voto
+from models.mesaModel import Mesa
 
 
 class MesaRepository (InterfaceRepository[Mesa]):

@@ -1,4 +1,5 @@
 from models.mesaModel import Mesa
+from repositories.mesaRepository import MesaRepository
 
 
 class MesaController:
@@ -14,13 +15,9 @@ class MesaController:
         This method returns all 'Mesa' persisted in the DB
         :return:
         """
-        data = {
-            "_id": "1",
-            "numero_mesa": "1",
-            "cantidad_inscritos": "30"
-        }
-        mesa = Mesa(data)
-        return [mesa.__dict__]
+        response = MesaRepository().find_all()
+        print(response)
+        return response
 
     def show(self, id_: str) -> list:
         """
@@ -28,12 +25,8 @@ class MesaController:
         :param id_:
         :return:
         """
-        data = {
-            "_id": id_,
-            "numero_mesa": "1",
-            "cantidad_inscritos": "30"
-        }
-        mesa = Mesa(data)
+        response = MesaRepository().find_by_id(id_)
+        mesa = Mesa(response)
         return mesa.__dict__
 
     def create(self, mesa_: dict) -> dict:
@@ -42,9 +35,8 @@ class MesaController:
         :param mesa_:
         :return:
         """
-        print("insert a Mesa")
         mesa = Mesa(mesa_)
-        return mesa.__dict__
+        return MesaRepository().save(mesa)
 
     def update(self, id_: str, mesa_: dict) -> dict:
         """
@@ -54,10 +46,8 @@ class MesaController:
         :return:
         """
 
-        data = mesa_
-        data['_id'] = id_
-        mesa = Mesa(data)
-        return mesa.__dict__
+        response = MesaRepository().update(id_, mesa_)
+        return response
 
     def delete(self, id_: str) -> dict:
         """
@@ -65,4 +55,5 @@ class MesaController:
         :param id_:
         :return:
         """
+        MesaRepository().delete(id_)
         return {"Delete count": 1}
